@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ player.name }} - Profile</title>
+    <style>
+        body {
+            font-family: "Courier New", Courier, monospace;
+            background-color: #ffe6f0; /* soft pink */
+            text-align: center;
+            padding: 50px;
+        }
+
+        a.back {
+            display: block;
+            margin-bottom: 30px;
+            text-decoration: none;
+            color: #ff1aff;
+            font-size: 18px;
+        }
+
+        a.back:hover {
+            color: #ff66ff;
+        }
+
+        img.headshot {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ff1aff;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #ff1aff;
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <a class="back" href="/">← Back to Home</a>
+
+    <img class="headshot" src="/static/{{ player.image }}" alt="{{ player.name }}">
+    <h1>{{ player.name }}</h1>
+
+    <p><span class="label">Quote:</span> "{{ player.quote }}"</p>
+    <p><span class="label">Biggest Strength:</span> {{ player.strength }}</p>
+    <p><span class="label">Biggest Weakness:</span> {{ player.weakness }}</p>
+</body>
+</html>

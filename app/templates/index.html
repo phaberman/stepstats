@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stepstats</title>
+    <style>
+        body {
+            font-family: "Courier New", Courier, monospace;
+            background-color: #ffe6f0; /* soft pink */
+            text-align: center;
+            padding: 50px;
+        }
+
+        nav {
+            margin-bottom: 40px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #ff1aff; /* bright pink */
+            margin: 0 20px;
+            font-size: 20px;
+        }
+
+        nav a:hover {
+            color: #ff66ff;
+        }
+
+        h1 {
+            color: #ff1aff;
+            font-size: 48px;
+            margin-bottom: 30px;
+        }
+
+        img.main-gif {
+            width: 300px;
+            height: auto;
+            margin-bottom: 40px;
+        }
+
+        /* Player grid */
+        .players-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        .player-card {
+            text-align: center;
+        }
+
+        .player-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            cursor: pointer;
+            border: 3px solid #ff1aff;
+        }
+
+        .player-card a {
+            display: block;
+            color: #ff1aff;
+            text-decoration: none;
+            margin-top: 10px;
+            font-size: 18px;
+        }
+
+        .player-card a:hover {
+            color: #ff66ff;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/stats">Stats</a>
+        <a href="/players">Players</a>
+        <a href="/team-management">Team Management</a>
+    </nav>
+
+    <h1>#SuckIt</h1>
+    <img class="main-gif" src="/static/unicorn.gif" alt="Team Mascot GIF">
+
+    <!-- Players Section -->
+    <div class="players-grid">
+        <!-- Example player cards -->
+        <div class="player-card">
+            <a href="/players/1">
+                <img src="/static/sojo.jpg" alt="Sojo C">
+                Sojo C
+            </a>
+        </div>
+        <div class="player-card">
+            <a href="/players/2">
+                <img src="/static/phil.jpg" alt="Phil H">
+                Phil H
+            </a>
+        </div>
+        <div class="player-card">
+            <a href="/players/3">
+                <img src="/static/al.jpg" alt="Al BG">
+                BG Al
+            </a>
+        </div>
+        <!-- Add more player cards here -->
+    </div>
+</body>
+</html>
