@@ -22,25 +22,25 @@ async def root(request: Request):
 # Example player data
 players = {
     1: {
-        "name": "Sojo C",
+        "name": "Sojo",
         "image": "sojo.jpg",
         "quote": "Can I get the 6 kuai chicken tenders?",
-        "strength": "Bananas.",
-        "weakness": "Hamstrings."
+        "strength": "Bananas",
+        "weakness": "Hamstrings"
     },
     2: {
-        "name": "Phil H",
+        "name": "Phil",
         "image": "phil.jpg",
         "quote": "Nah, I'm going straight home after the games.",
-        "strength": "Not being afraid of Bryce's throws from ss.",
-        "weakness": "Giving an effort."
+        "strength": "Not being afraid of Bryce's throws from shortstop",
+        "weakness": "effort"
     },
     3: {
-        "name": "BG Al",
+        "name": "Al",
         "image": "al.jpg",
-        "quote": "I once sold 1000 villas and batted .900 all in the same season with 69 groundhogs.",
-        "strength": "Can't shut up. Won't shut up.",
-        "weakness": "Big. Gay."
+        "quote": "I have a reputation to protect!",
+        "strength": "Won't shut up",
+        "weakness": "Big and Gay"
     }
 }
 
