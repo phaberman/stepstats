@@ -23,12 +23,12 @@ existing_teams = con.execute("SELECT COUNT(*) FROM teams").fetchone()[0]
 if existing_teams == 0:
     con.execute("""
     INSERT INTO teams (id, name, logo) VALUES
-    (1, 'Stepdads', 'stepdads.jpg'),
-    (2, 'Blackouts', 'blackouts.jpg'),
-    (3, 'Dragons', 'dragons.jpg'),
-    (4, 'SOBs', 'sobs.jpg'),
-    (5, 'Thundersharkz', 'thundersharkz.jpg'),
-    (6, 'Huge Wave', 'hugewave.jpg')
+    (1, 'Stepdads', 'stepdads.png'),
+    (2, 'Blackouts', 'blackouts.png'),
+    (3, 'Dragons', 'dragons.png'),
+    (4, 'SOBs', 'sobs.png'),
+    (5, 'Thundersharkz', 'thundersharkz.png'),
+    (6, 'Huge Wave', 'hugewave.png')
     """)
 
 # Players table
@@ -81,8 +81,7 @@ CREATE TABLE IF NOT EXISTS player_stats (
 )
 """)
 
-# --- Helper functions ---
-
+# --- Helper function ---
 def get_next_id(table_name: str) -> int:
     """Return the next ID for a table."""
     return con.execute(f"SELECT COALESCE(MAX(id),0)+1 FROM {table_name}").fetchone()[0]

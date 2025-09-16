@@ -1,30 +1,30 @@
-import os, shutil
+# app/routes/players.py
+import os
+import shutil
 from fastapi import APIRouter, Request, Form, UploadFile, File
 from fastapi.responses import HTMLResponse, RedirectResponse
-from app.db import con, get_next_id
+from ..db import con, get_next_id
+from fastapi.templating import Jinja2Templates
 
 router = APIRouter()
-
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-UPLOAD_DIR = os.path.join(BASE_DIR, "..", "static", "uploads")
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
+UPLOAD_DIR = os.path.join(BASE_DIR, "static", "uploads")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
-# Player profile page
+# --- Player profile ---
 @router.get("/players/{player_id}", response_class=HTMLResponse)
 async def player_profile(request: Request, player_id: int):
-    row = con.execute("SELECT * FROM players WHERE id = ?", (player_id,)).fetchone()
-    if not row:
+    result = con.execute("SELECT * FROM players WHERE id = ?", (player_id,)).fetchone()
+    if not result:
         return HTMLResponse(content="Player not found", status_code=404)
-
     player = {
-        "id": row[0],
-        "name": row[1],
-        "strength": row[2],
-        "weakness": row[3],
-        "gout_level": row[4],
-        "quote": row[5],
-        "image": row[6]
+        "id": result[0],
+        "name": result[1],
+        "strength": result[2],
+        "weakness": result[3],
+        "gout_level": result[4],
+        "quote": result[5],
+        "image": result[6]
     }
-    return HTMLResponse(
-        content=router.templates.TemplateResponse("player_profile.html", {"request": request, "player": player})
-    )
+    return templates.TemplateResponse("player_profile.html", {"request": request, "player": player})
