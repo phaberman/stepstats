@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Team Management</title>
+    <style>
+        body {
+            font-family: "Courier New", Courier, monospace;
+            background-color: #ffe6f0;
+            padding: 50px;
+        }
+
+        a.back {
+            display: block;
+            margin-bottom: 30px;
+            text-decoration: none;
+            color: #ff1aff;
+        }
+
+        a.back:hover {
+            color: #ff66ff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 2px solid #ff1aff;
+        }
+
+        th {
+            background-color: #ffb3e6;
+        }
+
+        img.headshot {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid #ff1aff;
+        }
+
+        a.button {
+            padding: 5px 10px;
+            background-color: #ff1aff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-right: 5px;
+        }
+
+        a.button:hover {
+            background-color: #ff66ff;
+        }
+
+        form.delete-form {
+            display: inline;
+        }
+
+        button.delete-button {
+            padding: 5px 10px;
+            background-color: #ff1aff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button.delete-button:hover {
+            background-color: #ff66ff;
+        }
+
+        a.add-button {
+            padding: 10px 20px;
+            background-color: #ff1aff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        a.add-button:hover {
+            background-color: #ff66ff;
+        }
+    </style>
+</head>
+<body>
+    <a class="back" href="/">← Back to Home</a>
+
+    <h1>Team Management</h1>
+
+    <a class="add-button" href="/team-management/add">Add New Player</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Headshot</th>
+                <th>Name</th>
+                <th>Strength</th>
+                <th>Weakness</th>
+                <th>Gout Level</th>
+                <th>Quote</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player in players %}
+            <tr>
+                <td>
+                    {% if player.image %}
+                        <img class="headshot" src="/static/{{ player.image }}" alt="{{ player.name }}">
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+                <td>{{ player.name }}</td>
+                <td>{{ player.strength }}</td>
+                <td>{{ player.weakness }}</td>
+                <td>{{ player.gout_level }}</td>
+                <td>{{ player.quote }}</td>
+                <td>
+                    <a class="button" href="/team-management/edit/{{ player.id }}">Edit</a>
+                    <form class="delete-form" method="post" action="/team-management/delete/{{ player.id }}">
+                        <button class="delete-button" type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

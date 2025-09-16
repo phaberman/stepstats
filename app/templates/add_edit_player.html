@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ action }} Player</title>
+    <style>
+        body {
+            font-family: "Courier New", Courier, monospace;
+            background-color: #ffe6f0;
+            text-align: center;
+            padding: 50px;
+        }
+
+        form {
+            display: inline-block;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"], textarea, select {
+            width: 300px;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        input[type="file"] {
+            margin-top: 5px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #ff1aff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ff66ff;
+        }
+
+        a.back {
+            display: block;
+            margin-bottom: 30px;
+            text-decoration: none;
+            color: #ff1aff;
+        }
+
+        a.back:hover {
+            color: #ff66ff;
+        }
+
+        img.preview {
+            display: block;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <a class="back" href="/team-management">← Back to Team Management</a>
+
+    <h1>{{ action }} Player</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        <label for="name">Name:</label>
+        <input type="text" name="name" value="{{ player.name if player else '' }}" required>
+
+        <label for="strength">Strength:</label>
+        <input type="text" name="strength" value="{{ player.strength if player else '' }}" required>
+
+        <label for="weakness">Weakness:</label>
+        <input type="text" name="weakness" value="{{ player.weakness if player else '' }}" required>
+
+        <label for="gout_level">Gout Level:</label>
+        <input type="text" name="gout_level" value="{{ player.gout_level if player else '' }}" required>
+
+        <label for="quote">Quote:</label>
+        <textarea name="quote" rows="2" required>{{ player.quote if player else '' }}</textarea>
+
+        <label for="image">Headshot (jpg/png):</label>
+        <input type="file" name="image" accept="image/*">
+        {% if player and player.image %}
+            <img class="preview" src="/static/{{ player.image }}" alt="Current headshot">
+        {% endif %}
+
+        <button type="submit">{{ action }}</button>
+    </form>
+</body>
+</html>
