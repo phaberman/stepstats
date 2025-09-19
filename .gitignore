@@ -65,7 +65,7 @@ coverage.xml
 *.wal
 
 # Uploaded files (e.g., player profile pics)
-uploads/
+# uploads/
 
 # Logs
 *.log
