@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Players</title>
+    <style>
+        body {
+            font-family: "Courier New", Courier, monospace;
+            background-color: #ffe6f0;
+            padding: 50px;
+        }
+
+        a.back {
+            display: block;
+            margin-bottom: 30px;
+            text-decoration: none;
+            color: #ff1aff;
+        }
+
+        a.back:hover {
+            color: #ff66ff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 2px solid #ff1aff;
+        }
+
+        th {
+            background-color: #ffb3e6;
+        }
+
+        img.headshot {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid #ff1aff;
+        }
+
+        /* Filter input */
+        #playerFilter {
+            padding: 5px;
+            margin-bottom: 20px;
+            width: 300px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <a class="back" href="/">← Back to Home</a>
+
+    <h1>Players</h1>
+
+    <!-- Filter input -->
+    <input type="text" id="playerFilter" placeholder="Start typing a player's name...">
+
+    <table>
+        <thead>
+            <tr>
+                <th>Headshot</th>
+                <th>Name</th>
+                <th>Strength</th>
+                <th>Weakness</th>
+                <th>Gout Level</th>
+                <th>Quote</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player in players %}
+            <tr>
+                <td>
+                    {% if player.image %}
+                        <img class="headshot" src="/static/{{ player.image }}" alt="{{ player.name }}">
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+                <td>{{ player.name }}</td>
+                <td>{{ player.strength }}</td>
+                <td>{{ player.weakness }}</td>
+                <td>{{ player.gout_level }}</td>
+                <td>{{ player.quote }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        // Client-side filter
+        document.getElementById('playerFilter').addEventListener('input', function() {
+            const filter = this.value.toLowerCase();
+            const rows = document.querySelectorAll('table tbody tr');
+            rows.forEach(row => {
+                const nameCell = row.querySelector('td:nth-child(2)'); // Name column
+                if (nameCell.textContent.toLowerCase().includes(filter)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -28,10 +28,11 @@ templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
 from .db import con, get_next_id
 
 # --- Import routers ---
-from .routes import players, stats, team_management, games
+from .routes import players, stats, team_management, games, view_players
 
 app.include_router(players.router)
 app.include_router(stats.router)
+app.include_router(view_players.router)
 app.include_router(team_management.router)
 app.include_router(games.router)
 
