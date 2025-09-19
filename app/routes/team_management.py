@@ -12,9 +12,18 @@ templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
 UPLOAD_DIR = os.path.join(BASE_DIR, "static", "uploads")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
+# --- Admin guard ---
+def require_admin(request: Request):
+    if not request.session.get("is_admin"):
+        return templates.TemplateResponse("no_permission.html", {"request": request})
+    return True
+
 # --- Team Management page ---
 @router.get("/team-management", response_class=HTMLResponse)
 async def team_management(request: Request):
+    if not request.session.get("is_admin"):
+        return templates.TemplateResponse("no_permission.html", {"request": request})
+
     rows = con.execute("SELECT * FROM players ORDER BY name").fetchall()
     players = [
         {"id": r[0], "name": r[1], "strength": r[2], "weakness": r[3],
@@ -26,10 +35,13 @@ async def team_management(request: Request):
 # --- Add player ---
 @router.get("/team-management/add", response_class=HTMLResponse)
 async def add_player_form(request: Request):
+    if not require_admin(request):
+        return require_admin(request)
     return templates.TemplateResponse("add_edit_player.html", {"request": request, "action": "Add", "player": None})
 
 @router.post("/team-management/add")
 async def add_player(
+    request: Request,
     name: str = Form(...),
     strength: str = Form(...),
     weakness: str = Form(...),
@@ -37,6 +49,9 @@ async def add_player(
     quote: str = Form(...),
     image: UploadFile = File(...)
 ):
+    if not require_admin(request):
+        return require_admin(request)
+
     image_filename = f"{name}_{image.filename}"
     image_path = os.path.join(UPLOAD_DIR, image_filename)
     with open(image_path, "wb") as f:
@@ -51,6 +66,9 @@ async def add_player(
 # --- Edit player ---
 @router.get("/team-management/edit/{player_id}", response_class=HTMLResponse)
 async def edit_player_form(request: Request, player_id: int):
+    if not require_admin(request):
+        return require_admin(request)
+
     row = con.execute("SELECT * FROM players WHERE id = ?", (player_id,)).fetchone()
     if not row:
         return HTMLResponse(content="Player not found", status_code=404)
@@ -60,6 +78,7 @@ async def edit_player_form(request: Request, player_id: int):
 
 @router.post("/team-management/edit/{player_id}")
 async def edit_player(
+    request: Request,
     player_id: int,
     name: str = Form(...),
     strength: str = Form(...),
@@ -68,6 +87,9 @@ async def edit_player(
     quote: str = Form(...),
     image: UploadFile = File(None)
 ):
+    if not require_admin(request):
+        return require_admin(request)
+
     current_image = con.execute("SELECT image FROM players WHERE id = ?", (player_id,)).fetchone()[0]
     if image and image.filename:
         image_filename = f"{name}_{image.filename}"
@@ -77,6 +99,7 @@ async def edit_player(
         image_db_path = f"uploads/{image_filename}"
     else:
         image_db_path = current_image
+
     con.execute("""
         UPDATE players
         SET name=?, strength=?, weakness=?, gout_level=?, quote=?, image=?
@@ -86,6 +109,9 @@ async def edit_player(
 
 # --- Delete player ---
 @router.post("/team-management/delete/{player_id}")
-async def delete_player(player_id: int):
+async def delete_player(request: Request, player_id: int):
+    if not require_admin(request):
+        return require_admin(request)
+
     con.execute("DELETE FROM players WHERE id = ?", (player_id,))
     return RedirectResponse("/team-management", status_code=303)

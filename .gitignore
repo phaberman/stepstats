@@ -13,6 +13,9 @@ stepstats-env/
 # Pyenv
 .python-version
 
+# Env
+.env
+
 # Distribution / packaging
 build/
 develop-eggs/
