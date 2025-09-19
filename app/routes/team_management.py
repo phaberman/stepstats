@@ -15,7 +15,7 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 # --- Team Management page ---
 @router.get("/team-management", response_class=HTMLResponse)
 async def team_management(request: Request):
-    rows = con.execute("SELECT * FROM players ORDER BY id").fetchall()
+    rows = con.execute("SELECT * FROM players ORDER BY name").fetchall()
     players = [
         {"id": r[0], "name": r[1], "strength": r[2], "weakness": r[3],
          "gout_level": r[4], "quote": r[5], "image": r[6]}

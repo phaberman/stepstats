@@ -31,6 +31,6 @@ from fastapi.responses import HTMLResponse
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):
     # Example: fetch players for homepage
-    rows = con.execute("SELECT id, name, image FROM players ORDER BY id").fetchall()
+    rows = con.execute("SELECT id, name, image FROM players ORDER BY name").fetchall()
     players = [{"id": r[0], "name": r[1], "image": r[2]} for r in rows]
     return templates.TemplateResponse("index.html", {"request": request, "players": players})
