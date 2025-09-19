@@ -61,7 +61,7 @@ coverage.xml
 # Local databases
 *.db
 *.sqlite
-*.duckdb
+# *.duckdb
 *.wal
 
 # Uploaded files (e.g., player profile pics)
